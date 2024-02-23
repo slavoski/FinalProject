@@ -9,4 +9,9 @@
     <string name="email_format">Please enter a valid Email format</string>
     <string name="password_empty">Password cannot be empty</string>
     <string name="password_validation_error">Password must be at least 8 characters and contain one number and one of the following special characters "!@#$%^&amp;()+="</string>
+    <string name="verify_email">Please verify email and login</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="register">Register</string>
+    <string name="registeration_email">Registration Email Resent</string>
 </resources>

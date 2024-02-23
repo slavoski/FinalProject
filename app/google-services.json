@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "263023039499",
+    "firebase_url": "https://oilwellmaintainer-default-rtdb.firebaseio.com",
+    "project_id": "oilwellmaintainer",
+    "storage_bucket": "oilwellmaintainer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263023039499:android:c66287307c33aca753a30e",
+        "android_client_info": {
+          "package_name": "com.example.oilWellChecklist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263023039499-e2o63f10t7esorik3ubbvs7adr2maeqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYTcKERTiJwI__LxeOI--xf8jNm-Y0AdM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263023039499-e2o63f10t7esorik3ubbvs7adr2maeqb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
