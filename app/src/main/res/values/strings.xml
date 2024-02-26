@@ -13,5 +13,13 @@
     <string name="name">Name</string>
     <string name="phone_number">Phone Number</string>
     <string name="register">Register</string>
-    <string name="registeration_email">Registration Email Resent</string>
+    <string name="registration_email">Registration Email Resent</string>
+    <string name="enter_email_address">Please enter your email address</string>
+    <string name="check_inbox">Please check your inbox for the email.</string>
+    <string name="error_signOn">Error while handling your request. Please try again.</string>
+    <string name="verify_email_first">Please verify your email first and then login again.</string>
+    <string name="please_resolve_email_password_issues">Please Resolve Email/Password Issues</string>
+    <string name="registration_successful_please_verify_email">Registration successful, please verify email.</string>
+    <string name="error_registering_user_please_try_again">Error registering user, please try again</string>
+    <string name="user_already_exists">User already exists</string>
 </resources>

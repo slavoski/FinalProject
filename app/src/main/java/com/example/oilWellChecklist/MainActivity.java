@@ -11,16 +11,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth _authorizer;
-    private FirebaseUser _authorizedUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        _authorizer = FirebaseAuth.getInstance();
-        _authorizedUser = _authorizer.getCurrentUser();
+        FirebaseAuth _authorizer = FirebaseAuth.getInstance();
+        FirebaseUser _authorizedUser = _authorizer.getCurrentUser();
 
         if(_authorizedUser == null)
         {
@@ -31,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         {
             if(_authorizedUser.isEmailVerified())
             {
-                //start main activity
+                startActivity(new Intent(MainActivity.this, HomePageActivity.class));
+                finish();
             }
             else
             {
