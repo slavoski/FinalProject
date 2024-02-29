@@ -22,4 +22,14 @@
     <string name="registration_successful_please_verify_email">Registration successful, please verify email.</string>
     <string name="error_registering_user_please_try_again">Error registering user, please try again</string>
     <string name="user_already_exists">User already exists</string>
+    <string name="title_activity_login2">LoginActivity2</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="web_client_id">263023039499-hm2tja983tbsjt2tcp7fnto1vhie8ocp.apps.googleusercontent.com</string>
 </resources>

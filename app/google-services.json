@@ -15,7 +15,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "263023039499-e2o63f10t7esorik3ubbvs7adr2maeqb.apps.googleusercontent.com",
+          "client_id": "263023039499-alk4reo73stsdgarc03bdq0le1t9ur4v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.oilWellChecklist",
+            "certificate_hash": "d1ac0c057b1b65536ce3e896788c005d6a912188"
+          }
+        },
+        {
+          "client_id": "263023039499-s3kegh294l7e3mckivknc7q3r1umkfs5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.oilWellChecklist",
+            "certificate_hash": "39659192da33765292f053efec4b9747b77fe2dd"
+          }
+        },
+        {
+          "client_id": "263023039499-hm2tja983tbsjt2tcp7fnto1vhie8ocp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

@@ -1,5 +1,6 @@
 package com.example.oilWellChecklist;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,14 +12,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.oilWellChecklist.database_models.User;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -39,6 +51,10 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth _authorizer;
     private FirebaseUser _currentUser;
 
+    private GoogleSignInClient _googleSignInClient;
+
+    private ActivityResultLauncher<Intent> _activityResultLauncher;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         _nameText = findViewById(R.id.name_text);
         _phoneText = findViewById(R.id.phone_text);
         _loginButton =  findViewById(R.id.login_button);
+        SignInButton _googleLoginButton = findViewById(R.id.google_login_button);
 
         Button register = findViewById(R.id.register_user);
         Button forgotPassword = findViewById(R.id.forgot_password);
@@ -118,6 +135,26 @@ public class LoginActivity extends AppCompatActivity {
         _loginButton.setOnClickListener(this::onLoginClick);
         register.setOnClickListener(this::onRegisterClick);
         forgotPassword.setOnClickListener(this::onForgotPasswordClick);
+        _googleLoginButton.setOnClickListener(this::googleOnLoginClick);
+
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        _googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        _activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (result) ->
+                {
+                    if(result.getResultCode() == Activity.RESULT_OK)
+                    {
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                        handleSignInResult(task);
+                    }
+                });
+
 
         SetVisibility(View.GONE, getString(R.string.login));
 
@@ -291,6 +328,28 @@ public class LoginActivity extends AppCompatActivity {
     private void EmailVerificationFailureListener(Exception ex)
     {
         Toast.makeText(LoginActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void googleOnLoginClick(View view) {
+        Intent signInIntent = _googleSignInClient.getSignInIntent();
+        _activityResultLauncher.launch(signInIntent);
+
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+
+            _authorizer.signInWithCredential(firebaseCredential)
+                    .addOnFailureListener(this::SignOnFailedListener)
+                    .addOnSuccessListener(this::SignOnSuccessListener);
+
+
+        } catch (ApiException ex) {
+            Toast.makeText(LoginActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 
