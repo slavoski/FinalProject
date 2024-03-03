@@ -13,6 +13,4 @@ public class User {
         UserName = email;
         Phone = phone;
     }
-
-
 }

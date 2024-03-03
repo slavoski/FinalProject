@@ -39,14 +39,12 @@ android {
     }
 }
 
-
-
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.databinding:databinding-runtime:8.2.2")
+    implementation("androidx.databinding:databinding-runtime:8.3.0")
     implementation("androidx.annotation:annotation:1.7.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
@@ -69,12 +67,10 @@ dependencies {
     implementation("androidx.credentials:credentials:1.3.0-alpha01")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
 
-
     //Picasso
     implementation("com.squareup.picasso:picasso:2.8")
 
     implementation("androidx.activity:activity-ktx:1.8.2")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-
 
 }
