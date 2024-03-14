@@ -46,7 +46,8 @@
         </activity>
         <activity
             android:name=".HomePageActivity"
-            android:exported="false" >
+            android:exported="false"
+            android:theme="@style/Theme.FinalProject">
         </activity>
     </application>
 

@@ -16,23 +16,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.oilWellChecklist.Leases.LeasesFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Objects;
-
 public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
 
     MaterialToolbar toolbar;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
-
     private FirebaseAuth _authorizer;
     private FirebaseUser _currentUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +70,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
+        LoadFragment(new LeasesFragment());
 
     }
 
@@ -128,6 +125,4 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
         return true;
     }
-
-
 }

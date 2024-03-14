@@ -36,4 +36,7 @@
     <string name="navigation_drawer_closed">Close Navigation Drawer</string>
     <string name="home">Home</string>
     <string name="logout">Logout</string>
+    <string name="add_new_lease">Add New Lease</string>
+    <string name="lease_name">Lease Name</string>
+    <string name="lease_description">Lease Description</string>
 </resources>
