@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -71,7 +72,18 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         actionBarDrawerToggle.syncState();
 
         LoadFragment(new LeasesFragment());
+    }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        // Check if the drawer is closed
+        if (drawerLayout != null && !drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            // If closed, allow touch events to propagate to the views underneath
+            return super.dispatchTouchEvent(ev);
+        } else {
+            // If open, consume touch events
+            return true;
+        }
     }
 
     private void LoadFragment(Fragment fragment)
@@ -81,7 +93,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         fragmentTransaction.replace(R.id.fragmentContainer, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 
     @Override
