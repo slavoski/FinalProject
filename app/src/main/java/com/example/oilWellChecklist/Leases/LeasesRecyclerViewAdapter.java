@@ -31,11 +31,14 @@ public class LeasesRecyclerViewAdapter extends RecyclerView.Adapter<LeasesRecycl
     private final HashMap<String, LeaseModel> _leases;
     FirebaseHelper _firebaseHelper;
 
-    public LeasesRecyclerViewAdapter(HashMap<String, LeaseModel> leases, List<String> leasesKeyList)
+    private final LeaseItemClickListener _leaseItemClickListener;
+
+    public LeasesRecyclerViewAdapter(HashMap<String, LeaseModel> leases, List<String> leasesKeyList, LeaseItemClickListener leaseItemClickListener)
     {
         _leases = leases;
         _leasesKeyList = leasesKeyList;
         _firebaseHelper = new FirebaseHelper();
+        _leaseItemClickListener = leaseItemClickListener;
     }
 
     @NonNull
@@ -76,6 +79,12 @@ public class LeasesRecyclerViewAdapter extends RecyclerView.Adapter<LeasesRecycl
             holder._leasesName.setText(lease.LeaseName);
             holder._leasesDescription.setText(lease.Description);
             holder._leasesImage.setImageResource(R.drawable.pump_jack_icon);
+            holder.itemView.setOnClickListener(v -> {
+                if(_leaseItemClickListener != null)
+                {
+                    _leaseItemClickListener.onItemClick(v, position);
+                }
+            });
         }
     }
 

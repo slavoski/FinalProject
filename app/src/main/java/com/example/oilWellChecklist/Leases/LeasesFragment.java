@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oilWellChecklist.Dialogs.NewLeaseDialog;
 import com.example.oilWellChecklist.Helpers.FirebaseHelper;
+import com.example.oilWellChecklist.HomePageActivity;
 import com.example.oilWellChecklist.LeaseDetails.LeaseDetailsFragment;
 import com.example.oilWellChecklist.R;
 import com.example.oilWellChecklist.database_models.LeaseModel;
@@ -44,21 +45,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseModelDialogListener, LeaseItemClickListener {
+public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseModelDialogListener {
 
     private LeasesRecyclerViewAdapter _leasesRecyclerViewAdapter;
     private final HashMap<String, LeaseModel> _leases = new HashMap<>();
     private final List<String> _leasesKeyList = new ArrayList<>();
-
     private FirebaseHelper _firebaseHelper;
-
     private FloatingActionButton _newLeaseButton;
-
-    private  Button button;
-
     RecyclerView recyclerView;
-
     Context _context;
+
+    LeaseItemClickListener _leaseItemClickListener;
+
+    public LeasesFragment(LeaseItemClickListener leaseItemClickListener) {
+        _leaseItemClickListener = leaseItemClickListener;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -71,26 +72,23 @@ public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseM
 
         _firebaseHelper.fire_store.collection("Leases")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful())
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful())
+                    {
+                        for(DocumentSnapshot document : task.getResult())
                         {
-                            for(DocumentSnapshot document : task.getResult())
-                            {
-                                LeaseModel leaseModel = new LeaseModel(document.get("LeaseName").toString(), document.get("Description").toString(), document.get("Id").toString(), null, document.get("UserId").toString() );
-                                _leasesKeyList.add(document.getId());
-                                _leases.put(document.getId(), leaseModel);
+                            LeaseModel leaseModel = new LeaseModel(document.get("LeaseName").toString(), document.get("Description").toString(), document.get("Id").toString(), null, document.get("UserId").toString() );
+                            _leasesKeyList.add(document.getId());
+                            _leases.put(document.getId(), leaseModel);
 
-                                int size = _leasesKeyList.size() - 1;
-                                _leasesRecyclerViewAdapter.notifyItemInserted(size);
-                                recyclerView.scrollToPosition(size);
-                            }
+                            int size = _leasesKeyList.size() - 1;
+                            _leasesRecyclerViewAdapter.notifyItemInserted(size);
+                            recyclerView.scrollToPosition(size);
                         }
-                        else
-                        {
-                            Toast.makeText(_context, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(_context, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -110,7 +108,7 @@ public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseM
         _newLeaseButton = (FloatingActionButton)view.findViewById(R.id.new_leases_button);
         _newLeaseButton.setOnClickListener(this::openNewLeaseDialog);
 
-        _leasesRecyclerViewAdapter = new LeasesRecyclerViewAdapter(_leases, _leasesKeyList);
+        _leasesRecyclerViewAdapter = new LeasesRecyclerViewAdapter(_leases, _leasesKeyList, _leaseItemClickListener);
 
         recyclerView = view.findViewById(R.id.leases_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
@@ -160,14 +158,5 @@ public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseM
         LeaseModel leaseModel = new LeaseModel(newLease.Name, newLease.Description, java.util.UUID.randomUUID().toString(), null, _firebaseHelper.currentUser.getUid());
 
         addNewLease(leaseModel);
-    }
-
-    @Override
-    public void onItemClick(View view, int leaseID) {
-        FragmentManager fragmentManager = this.getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainer, new LeaseDetailsFragment());
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
     }
 }
