@@ -74,18 +74,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         LoadFragment(new LeasesFragment());
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        // Check if the drawer is closed
-        if (drawerLayout != null && !drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            // If closed, allow touch events to propagate to the views underneath
-            return super.dispatchTouchEvent(ev);
-        } else {
-            // If open, consume touch events
-            return true;
-        }
-    }
-
     private void LoadFragment(Fragment fragment)
     {
         FragmentManager fragmentManager = getSupportFragmentManager();
