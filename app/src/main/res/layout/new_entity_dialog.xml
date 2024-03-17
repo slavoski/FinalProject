@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <Spinner
+        android:id="@+id/entity_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <include
+        android:id="@+id/new_oil_well_dialog"
+        layout="@layout/new_oil_well_view"
+        android:visibility="gone"
+        />
+
+    <include
+        android:id="@+id/new_oil_tank_dialog"
+        layout="@layout/new_tank_view"
+        android:visibility="gone"
+        />
+</FrameLayout>

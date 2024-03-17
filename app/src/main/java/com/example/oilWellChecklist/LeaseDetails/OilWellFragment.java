@@ -10,8 +10,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.oilWellChecklist.R;
+import com.example.oilWellChecklist.database_models.OilWellModel;
 
 public class OilWellFragment extends Fragment {
+
+    OilWellModel _oilWellModel;
+    public  OilWellFragment(OilWellModel oilWellModel)
+    {
+        _oilWellModel = oilWellModel;
+    }
 
     @Nullable
     @Override

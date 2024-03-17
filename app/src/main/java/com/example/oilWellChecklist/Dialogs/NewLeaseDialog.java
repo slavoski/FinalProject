@@ -3,15 +3,12 @@ package com.example.oilWellChecklist.Dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,7 +21,6 @@ import com.example.oilWellChecklist.R;
 
 public class NewLeaseDialog extends DialogFragment {
 
-    Button actionButton;
     private EditText _newLeaseName, _newLeaseDescription;
 
     public interface NewLeaseModelDialogListener
@@ -48,8 +44,6 @@ public class NewLeaseDialog extends DialogFragment {
             Toast.makeText(this.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
-    public NewLeaseDialog() {}
 
     @Nullable
     @Override

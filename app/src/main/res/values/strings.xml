@@ -43,4 +43,13 @@
     <string name="new_lease_name">New Lease Name</string>
     <string name="new_lease_description">New Lease Description</string>
     <string name="capped">Capped:</string>
+    <string name="new_oil_well_name">New Oil Well Name</string>
+    <string name="new_oil_well_description">New Oil Well Description</string>
+    <string name="create_new_oil_well">Create New Oil Well</string>
+    <string name="is_capped">Is Capped</string>
+    <string name="create_new_tank">Create New Tank</string>
+    <string name="new_tank_name">New Tank Name</string>
+    <string name="new_tank_description">New Tank Description</string>
+    <string name="create">Create</string>
+    <string name="add_new">Add New</string>
 </resources>
