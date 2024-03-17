@@ -39,4 +39,8 @@
     <string name="add_new_lease">Add New Lease</string>
     <string name="lease_name">Lease Name</string>
     <string name="lease_description">Lease Description</string>
+    <string name="create_new_lease">Create New Lease</string>
+    <string name="new_lease_name">New Lease Name</string>
+    <string name="new_lease_description">New Lease Description</string>
+    <string name="capped">Capped:</string>
 </resources>

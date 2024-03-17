@@ -19,7 +19,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Create New Lease"
+                android:text="@string/create_new_lease"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"/>
 
@@ -41,7 +41,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="New Lease Name"
+                android:hint="@string/new_lease_name"
                 android:layout_margin="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -54,7 +54,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="New Lease Description"
+                android:hint="@string/new_lease_description"
                 android:layout_margin="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText

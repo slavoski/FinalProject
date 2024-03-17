@@ -22,7 +22,7 @@ public class LeaseDetailsFragment extends Fragment {
 
     public LeaseDetailsFragment(int leaseId)
     {
-        leaseId = _leaseID;
+         _leaseID = leaseId;
     }
 
     @Override
@@ -33,6 +33,7 @@ public class LeaseDetailsFragment extends Fragment {
         _firebaseHelper =  new FirebaseHelper();
 
         _firebaseHelper.fire_store.collection("LeaseEntities")
+                .whereEqualTo("LeaseId", _leaseID)
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful())
@@ -47,7 +48,6 @@ public class LeaseDetailsFragment extends Fragment {
                         Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 
     @Nullable

@@ -71,6 +71,7 @@ public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseM
         _context = getContext();
 
         _firebaseHelper.fire_store.collection("Leases")
+                .whereEqualTo("UserId", _firebaseHelper.currentUser.getUid())
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful())
