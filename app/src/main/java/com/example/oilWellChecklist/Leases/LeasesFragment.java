@@ -8,37 +8,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oilWellChecklist.Dialogs.NewLeaseDialog;
 import com.example.oilWellChecklist.Helpers.FirebaseHelper;
-import com.example.oilWellChecklist.HomePageActivity;
-import com.example.oilWellChecklist.LeaseDetails.LeaseDetailsFragment;
 import com.example.oilWellChecklist.R;
 import com.example.oilWellChecklist.database_models.LeaseModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +33,6 @@ public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseM
     private final HashMap<String, LeaseModel> _leases = new HashMap<>();
     private final List<String> _leasesKeyList = new ArrayList<>();
     private FirebaseHelper _firebaseHelper;
-    private FloatingActionButton _newLeaseButton;
     RecyclerView recyclerView;
     Context _context;
 
@@ -106,7 +87,7 @@ public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseM
     {
         View view = inflater.inflate(R.layout.fragment_leases, container, false);
 
-        _newLeaseButton = (FloatingActionButton)view.findViewById(R.id.new_leases_button);
+        FloatingActionButton _newLeaseButton = view.findViewById(R.id.new_leases_button);
         _newLeaseButton.setOnClickListener(this::openNewLeaseDialog);
 
         _leasesRecyclerViewAdapter = new LeasesRecyclerViewAdapter(_leases, _leasesKeyList, _leaseItemClickListener);
@@ -123,33 +104,27 @@ public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseM
 
     public void addNewLease(LeaseModel leaseModel)
     {
-        _firebaseHelper.fire_store.collection("Leases").add(leaseModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                String postKey = documentReference.getId();
+        _firebaseHelper.fire_store.collection("Leases").add(leaseModel).addOnSuccessListener(documentReference -> {
+            String postKey = documentReference.getId();
 
-                if(!_leases.containsKey(postKey))
+            if(!_leases.containsKey(postKey))
+            {
+                Log.i(TAG, documentReference.toString());
+                try {
+                    String id = documentReference.getId();
+                    _leases.put(id, leaseModel);
+                    _leasesKeyList.add(id);
+                    int size = _leasesKeyList.size() - 1;
+                    _leasesRecyclerViewAdapter.notifyItemInserted(size);
+                    recyclerView.scrollToPosition(size);
+                }
+                catch (Exception ex)
                 {
-
-                    Log.i(TAG, documentReference.toString());
-                    try {
-                        String id = documentReference.getId();
-                        _leases.put(id, leaseModel);
-                        _leasesKeyList.add(id);
-                        int size = _leasesKeyList.size() - 1;
-                        _leasesRecyclerViewAdapter.notifyItemInserted(size);
-                        recyclerView.scrollToPosition(size);
-                    }
-                    catch (Exception ex)
-                    {
-                        Toast.makeText(_context, ex.getMessage(), Toast.LENGTH_SHORT);
-                    }
+                    Toast.makeText(_context, ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(ex ->
-            {
-                Log.e(TAG, Objects.requireNonNull(ex.getMessage()));
-            });
+                Log.e(TAG, Objects.requireNonNull(ex.getMessage())));
     }
 
     @Override

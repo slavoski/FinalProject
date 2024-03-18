@@ -52,4 +52,5 @@
     <string name="new_tank_description">New Tank Description</string>
     <string name="create">Create</string>
     <string name="add_new">Add New</string>
+    <string name="select_new_entity">Select New Entity:</string>
 </resources>
