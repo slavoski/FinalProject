@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -23,7 +22,6 @@ import com.example.oilWellChecklist.Leases.LeasesFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LeaseItemClickListener{
 
@@ -31,7 +29,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     private FirebaseAuth _authorizer;
-    private FirebaseUser _currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +37,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.activity_home_page);
 
         _authorizer = FirebaseAuth.getInstance();
-        _currentUser = _authorizer.getCurrentUser();
 
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigation_view);
@@ -128,7 +124,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     }
 
     @Override
-    public void onItemClick(View v, int leaseID) {
+    public void onItemClick(View v, String leaseID) {
         LoadFragment(new LeaseDetailsFragment(leaseID));
     }
 }

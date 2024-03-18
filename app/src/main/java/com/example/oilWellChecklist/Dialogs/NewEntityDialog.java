@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,14 +20,26 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.oilWellChecklist.Constants.EntityType;
+import com.example.oilWellChecklist.LeaseDetails.NewEntityModel;
+import com.example.oilWellChecklist.LeaseDetails.NewOilWellModel;
+import com.example.oilWellChecklist.LeaseDetails.NewTankModel;
 import com.example.oilWellChecklist.R;
-import com.example.oilWellChecklist.database_models.EntityModel;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class NewEntityDialog extends DialogFragment {
 
+    TextView _newOilWellName, _newOilWellDescription, _newTankName, _newTankDescription;
+    SwitchMaterial _newIsCapped;
+
+    EntityType selectedEntity;
+
     public interface NewEntityModelDialogListener
     {
-        void onFinishNewEntity(EntityModel newEntity);
+        void onFinishNewEntity(NewEntityModel newEntity);
     }
 
     private NewEntityModelDialogListener newEntityModelDialogListener;
@@ -50,8 +64,9 @@ public class NewEntityDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_entity_dialog, container, false);
 
-        EntityType[] entities = EntityType.values();
-        ArrayAdapter<EntityType> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, entities);
+        List<String> entitiesDescriptions = Arrays.stream(EntityType.values()).map(EntityType::getDescription).collect(Collectors.toList());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, entitiesDescriptions);
+
         Spinner selector = view.findViewById(R.id.entity_selector);
         selector.setAdapter(adapter);
 
@@ -60,7 +75,8 @@ public class NewEntityDialog extends DialogFragment {
         selector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch(entities[position])
+                selectedEntity = EntityType.values()[position];
+                switch(selectedEntity)
                 {
                     case OIL_WELL:
                         oilWellView.setVisibility(View.VISIBLE);
@@ -83,6 +99,27 @@ public class NewEntityDialog extends DialogFragment {
             }
         });
 
+        Button oilWellButton = view.findViewById(R.id.button_create_new_oil_well);
+        oilWellButton.setOnClickListener(this::CreateNewEntity);
+
+        Button tankButton = view.findViewById(R.id.button_create_new_tank);
+        tankButton.setOnClickListener(this::CreateNewEntity);
+
+        try {
+            _newIsCapped = oilWellView.findViewById(R.id.is_capped);
+            _newOilWellDescription = oilWellView.findViewById(R.id.new_oil_well_description);
+            _newOilWellName = oilWellView.findViewById(R.id.new_oil_well_name);
+
+            _newTankDescription = tankView.findViewById(R.id.new_tank_description);
+            _newTankName = tankView.findViewById(R.id.new_tank_name);
+
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(this.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        selector.setSelection(0);
 
         return view;
     }
@@ -92,9 +129,18 @@ public class NewEntityDialog extends DialogFragment {
     {
         try
         {
-
-            //Send based on selection
-            //newEntityModelDialogListener.onFinishNewEntity(new NewLeaseModel(_newLeaseName.getText().toString(), _newLeaseDescription.getText().toString()));
+            switch(selectedEntity)
+            {
+                case OIL_WELL:
+                    newEntityModelDialogListener.onFinishNewEntity( new NewOilWellModel(_newOilWellName.getText().toString(), _newOilWellDescription.getText().toString(), _newIsCapped.isSelected()));
+                    break;
+                case TANK:
+                    newEntityModelDialogListener.onFinishNewEntity( new NewTankModel(_newTankName.getText().toString(), _newTankDescription.getText().toString() ));
+                    break;
+                default:
+                    Toast.makeText(this.getContext(),"Unknown Entity: " + selectedEntity.getDescription(), Toast.LENGTH_SHORT).show();
+                    break;
+            }
         }
         catch (Exception ex)
         {

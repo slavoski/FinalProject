@@ -1,6 +1,9 @@
 package com.example.oilWellChecklist.LeaseDetails;
 
+import static com.example.oilWellChecklist.Constants.Constants.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +28,11 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class LeaseDetailsFragment extends Fragment {
+public class LeaseDetailsFragment extends Fragment implements NewEntityDialog.NewEntityModelDialogListener {
 
-    private final int _leaseID;
+    private final String _leaseID;
 
     LeaseDetailsViewPagerAdapter _leaseDetailsAdapter;
 
@@ -36,8 +40,9 @@ public class LeaseDetailsFragment extends Fragment {
 
     private final ArrayList<EntityModel> _entities = new ArrayList<>();
 
+    private FirebaseHelper _firebaseHelper;
 
-    public LeaseDetailsFragment(int leaseId)
+    public LeaseDetailsFragment(String leaseId)
     {
          _leaseID = leaseId;
     }
@@ -47,7 +52,8 @@ public class LeaseDetailsFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        FirebaseHelper _firebaseHelper = new FirebaseHelper();
+        _firebaseHelper = new FirebaseHelper();
+
 
         _firebaseHelper.fire_store.collection("LeaseEntities")
                 .whereEqualTo("LeaseId", _leaseID)
@@ -57,7 +63,7 @@ public class LeaseDetailsFragment extends Fragment {
                     {
                         for(DocumentSnapshot document : task.getResult())
                         {
-                            EntityType type = (EntityType)document.get("TypeId");
+                            EntityType type = EntityType.valueOf(document.get("TypeId").toString());
 
                             switch (type)
                             {
@@ -73,6 +79,9 @@ public class LeaseDetailsFragment extends Fragment {
                                     Toast.makeText(this.getContext(), "Unknown Type: " + type,Toast.LENGTH_SHORT).show();
                                     break;
                             }
+
+                            int size = _entities.size() - 1;
+                            _leaseDetailsAdapter.notifyItemInserted(size);
                         }
                     }
                     else
@@ -81,7 +90,7 @@ public class LeaseDetailsFragment extends Fragment {
                     }
                 });
 
-        _leaseDetailsAdapter = new LeaseDetailsViewPagerAdapter(this, _entities);
+
     }
 
     @Nullable
@@ -89,11 +98,13 @@ public class LeaseDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.lease_details_view, container, false);
 
-        _viewPager = (ViewPager2) view.findViewById(R.id.lease_detail_pager);
-        _viewPager.setAdapter(_leaseDetailsAdapter);
-        _viewPager.setPageTransformer((ViewPager2.PageTransformer)(new ZoomOutPageTransformer()));
+        _leaseDetailsAdapter = new LeaseDetailsViewPagerAdapter(this, _entities);
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.lease_detail_tabs);
+        _viewPager = view.findViewById(R.id.lease_detail_pager);
+        _viewPager.setAdapter(_leaseDetailsAdapter);
+        _viewPager.setPageTransformer(new ZoomOutPageTransformer());
+
+        TabLayout tabLayout = view.findViewById(R.id.lease_detail_tabs);
         new TabLayoutMediator(tabLayout, _viewPager, (tab, position) ->
                 tab.setText(_entities.get(position).Name)).attach();
 
@@ -107,6 +118,59 @@ public class LeaseDetailsFragment extends Fragment {
     {
         DialogFragment newEntityFragment = new NewEntityDialog();
         newEntityFragment.show(getChildFragmentManager(), "New Entity Fragment");
+    }
+
+    @Override
+    public void onFinishNewEntity(NewEntityModel newEntity) {
+
+        EntityModel entityModel = null;
+        switch (newEntity.Type) {
+            case TANK:
+                NewTankModel tankModel = (NewTankModel)newEntity;
+                //TODO add all data
+                entityModel = new TankModel(java.util.UUID.randomUUID().toString(), tankModel.Name,
+                        tankModel.Description, String.valueOf(_leaseID),"", "2000", "0",
+                        "50", "50");
+                break;
+            case OIL_WELL:
+                NewOilWellModel oilWellModel = (NewOilWellModel)newEntity;
+                entityModel = new OilWellModel(java.util.UUID.randomUUID().toString(), oilWellModel.Name, oilWellModel.Description,
+                        String.valueOf(_leaseID), "", oilWellModel.IsCapped );
+                break;
+            default:
+                Toast.makeText(this.getContext(), "Unknown Type: " + newEntity.Type, Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        addNewEntity(entityModel);
+
+    }
+
+    public void addNewEntity(EntityModel entityModel)
+    {
+        if(entityModel != null)
+        {
+            _firebaseHelper.fire_store.collection("LeaseEntities").add(entityModel).addOnSuccessListener(documentReference -> {
+                boolean alreadyExists = _entities.stream().anyMatch(entity -> Objects.equals(entity.Id, entityModel.Id));
+
+                if(!alreadyExists)
+                {
+                    Log.i(TAG, documentReference.toString());
+                    try {
+
+                        _entities.add(entityModel);
+                        int size = _entities.size() - 1;
+                        _leaseDetailsAdapter.notifyItemInserted(size);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }).addOnFailureListener(ex ->
+                    Log.e(TAG, Objects.requireNonNull(ex.getMessage())));
+        }
     }
 
 

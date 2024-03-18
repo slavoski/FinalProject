@@ -43,7 +43,7 @@
                 android:layout_margin="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/new_name"
+                    android:id="@+id/new_oil_well_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName" />
@@ -58,7 +58,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/new_oil_well_description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="120dp"
                     android:inputType="textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +86,7 @@
         android:layout_margin="10dp">
 
         <Button
-            android:id="@+id/button_create_new_lease"
+            android:id="@+id/button_create_new_oil_well"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"

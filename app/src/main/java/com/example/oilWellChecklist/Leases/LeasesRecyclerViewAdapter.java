@@ -2,7 +2,6 @@ package com.example.oilWellChecklist.Leases;
 
 import static com.example.oilWellChecklist.Constants.Constants.TAG;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.oilWellChecklist.Helpers.FirebaseHelper;
 import com.example.oilWellChecklist.R;
 import com.example.oilWellChecklist.database_models.LeaseModel;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.HashMap;
@@ -45,9 +41,8 @@ public class LeasesRecyclerViewAdapter extends RecyclerView.Adapter<LeasesRecycl
     @Override
     public LeasesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.leases_card_view, parent, false);
-        final LeasesViewHolder leasesViewHolder = new LeasesViewHolder(view);
 
-        return leasesViewHolder;
+        return new LeasesViewHolder(view);
     }
 
     @Override
@@ -82,7 +77,7 @@ public class LeasesRecyclerViewAdapter extends RecyclerView.Adapter<LeasesRecycl
             holder.itemView.setOnClickListener(v -> {
                 if(_leaseItemClickListener != null)
                 {
-                    _leaseItemClickListener.onItemClick(v, position);
+                    _leaseItemClickListener.onItemClick(v, lease.Id.toString());
                 }
             });
         }
