@@ -129,10 +129,7 @@ public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseM
 
     @Override
     public void onFinishNewLease(NewLeaseModel newLease) {
-        // public LeaseModel(String lease_name, String description, String id, String url, String userId )
-        //
         LeaseModel leaseModel = new LeaseModel(newLease.Name, newLease.Description, java.util.UUID.randomUUID().toString(), null, _firebaseHelper.currentUser.getUid());
-
         addNewLease(leaseModel);
     }
 }

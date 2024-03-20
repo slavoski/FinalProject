@@ -49,9 +49,9 @@ public class LeasesRecyclerViewAdapter extends RecyclerView.Adapter<LeasesRecycl
     public void onBindViewHolder(@NonNull LeasesViewHolder holder, int position) {
 
         final LeaseModel lease = _leases.get(_leasesKeyList.get(position));
-        DocumentReference leaseReference = _firebaseHelper.fire_store.collection("Leases").document(lease.Id);
 
         if(lease != null) {
+            DocumentReference leaseReference = _firebaseHelper.fire_store.collection("Leases").document(lease.Id);
             holder._userReference = _firebaseHelper.database.getReference("Users").child(lease.UserId);
 
             leaseReference.addSnapshotListener((snapshot, exception) ->

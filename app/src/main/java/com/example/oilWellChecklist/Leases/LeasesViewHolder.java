@@ -8,9 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oilWellChecklist.R;
-import com.google.firebase.database.DatabaseReference;
-
-import org.w3c.dom.Text;
 
 public class LeasesViewHolder extends RecyclerView.ViewHolder {
 
@@ -18,7 +15,6 @@ public class LeasesViewHolder extends RecyclerView.ViewHolder {
     public ImageView _leasesImage;
 
     public TextView _leasesDescription;
-    public DatabaseReference _userReference;
 
     public LeasesViewHolder(@NonNull View itemView) {
         super(itemView);

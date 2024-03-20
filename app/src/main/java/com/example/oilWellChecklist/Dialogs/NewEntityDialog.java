@@ -132,7 +132,7 @@ public class NewEntityDialog extends DialogFragment {
             switch(selectedEntity)
             {
                 case OIL_WELL:
-                    newEntityModelDialogListener.onFinishNewEntity( new NewOilWellModel(_newOilWellName.getText().toString(), _newOilWellDescription.getText().toString(), _newIsCapped.isSelected()));
+                    newEntityModelDialogListener.onFinishNewEntity( new NewOilWellModel(_newOilWellName.getText().toString(), _newOilWellDescription.getText().toString(), _newIsCapped.isChecked()));
                     break;
                 case TANK:
                     newEntityModelDialogListener.onFinishNewEntity( new NewTankModel(_newTankName.getText().toString(), _newTankDescription.getText().toString() ));
