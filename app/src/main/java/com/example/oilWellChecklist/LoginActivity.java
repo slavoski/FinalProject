@@ -3,6 +3,7 @@ package com.example.oilWellChecklist;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
@@ -17,7 +18,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.oilWellChecklist.SplashScreen.SplashFragment;
 import com.example.oilWellChecklist.database_models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -266,8 +270,24 @@ public class LoginActivity extends AppCompatActivity {
         }
         else if(_currentUser.isEmailVerified())
         {
-            startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-            finish();
+            setContentView(R.layout.activity_splash_screen);
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragmentContainer,new SplashFragment());
+            fragmentTransaction.commit();
+            new CountDownTimer(2000, 1000)
+            {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+                    finish();
+                }
+            }.start();
         }
         else
         {
@@ -351,6 +371,5 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
 
 }

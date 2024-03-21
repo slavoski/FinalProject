@@ -110,6 +110,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         {
             _authorizer.signOut();
             startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
+            finish();
         }
        //else if (id == R.id.movie_info_menu_option || id == R.id.movie_info_action)
        //{

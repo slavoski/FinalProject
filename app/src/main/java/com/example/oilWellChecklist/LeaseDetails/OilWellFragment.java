@@ -43,9 +43,10 @@ public class OilWellFragment extends Fragment {
         _firebaseHelper = new FirebaseHelper();
 
         _firebaseHelper.fire_store.collection("Cards")
-                .where(Filter.or(
+                .where(Filter.and( Filter.equalTo("TypeId", "OIL_WELL"),
+                        Filter.or(
                         Filter.equalTo("Default", true),
-                        Filter.equalTo("Id", _oilWellModel.Id)
+                        Filter.equalTo("Id", _oilWellModel.Id))
                 ))
                 .get()
                 .addOnCompleteListener(task -> {
