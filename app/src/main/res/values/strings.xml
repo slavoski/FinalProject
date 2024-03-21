@@ -53,4 +53,6 @@
     <string name="create">Create</string>
     <string name="add_new">Add New</string>
     <string name="select_new_entity">Select New Entity:</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
