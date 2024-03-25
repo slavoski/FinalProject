@@ -11,10 +11,10 @@ import com.example.oilWellChecklist.R;
 
 public class LeasesViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView _leasesName;
-    public ImageView _leasesImage;
+    public final TextView _leasesName;
+    public final ImageView _leasesImage;
 
-    public TextView _leasesDescription;
+    public final TextView _leasesDescription;
 
     public LeasesViewHolder(@NonNull View itemView) {
         super(itemView);

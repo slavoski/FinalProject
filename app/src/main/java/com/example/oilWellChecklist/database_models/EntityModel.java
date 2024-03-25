@@ -3,16 +3,16 @@ package com.example.oilWellChecklist.database_models;
 import com.example.oilWellChecklist.Constants.EntityType;
 
 public class EntityModel {
-    public String Id;
-    public String Name;
+    public final String Id;
+    public final String Name;
 
-    public String Description;
+    public final String Description;
 
-    public String LeaseId;
+    public final String LeaseId;
 
-    public String Url;
+    public final String Url;
 
-    public EntityType TypeId;
+    public final EntityType TypeId;
 
     public EntityModel(String id, String name, String description, String leaseId, String url, EntityType typeId)
     {

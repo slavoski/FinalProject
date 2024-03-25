@@ -25,7 +25,7 @@ public class LeasesRecyclerViewAdapter extends RecyclerView.Adapter<LeasesRecycl
 
     private final List<String> _leasesKeyList;
     private final HashMap<String, LeaseModel> _leases;
-    FirebaseHelper _firebaseHelper;
+    final FirebaseHelper _firebaseHelper;
 
     private final LeaseItemClickListener _leaseItemClickListener;
 
@@ -77,7 +77,7 @@ public class LeasesRecyclerViewAdapter extends RecyclerView.Adapter<LeasesRecycl
             holder.itemView.setOnClickListener(v -> {
                 if(_leaseItemClickListener != null)
                 {
-                    _leaseItemClickListener.onItemClick(v, lease.Id.toString());
+                    _leaseItemClickListener.onItemClick(v, lease.Id);
                 }
             });
         }
@@ -90,9 +90,9 @@ public class LeasesRecyclerViewAdapter extends RecyclerView.Adapter<LeasesRecycl
 
     public static class LeasesViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView _leasesName;
-        public TextView _leasesDescription;
-        public ImageView _leasesImage;
+        public final TextView _leasesName;
+        public final TextView _leasesDescription;
+        public final ImageView _leasesImage;
         public DatabaseReference _userReference;
 
         public LeasesViewHolder(@NonNull View itemView) {

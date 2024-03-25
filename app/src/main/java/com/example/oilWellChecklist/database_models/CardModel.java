@@ -2,8 +2,8 @@ package com.example.oilWellChecklist.database_models;
 
 public class CardModel {
 
-    public String Id;
-    public String Description;
+    public final String Id;
+    public final String Description;
 
     public CardModel(String id, String description)
     {

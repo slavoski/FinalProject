@@ -36,7 +36,7 @@ public class LeasesFragment extends Fragment implements NewLeaseDialog.NewLeaseM
     RecyclerView recyclerView;
     Context _context;
 
-    LeaseItemClickListener _leaseItemClickListener;
+    final LeaseItemClickListener _leaseItemClickListener;
 
     public LeasesFragment(LeaseItemClickListener leaseItemClickListener) {
         _leaseItemClickListener = leaseItemClickListener;

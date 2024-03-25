@@ -1,8 +1,8 @@
 package com.example.oilWellChecklist.Leases;
 
 public class NewLeaseModel {
-    String Name;
-    String Description;
+    final String Name;
+    final String Description;
 
     public NewLeaseModel(String name, String description)
     {

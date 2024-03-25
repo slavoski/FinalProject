@@ -1,10 +1,11 @@
 package com.example.oilWellChecklist.database_models;
 
+/** @noinspection unused*/
 public class User {
-    public String DisplayName;
-    public String Email;
-    public String UserName;
-    public String Phone;
+    public final String DisplayName;
+    public final String Email;
+    public final String UserName;
+    public final String Phone;
 
     public User(String displayName, String email, String phone)
     {

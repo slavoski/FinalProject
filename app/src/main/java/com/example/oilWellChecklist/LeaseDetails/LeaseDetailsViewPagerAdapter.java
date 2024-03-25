@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class LeaseDetailsViewPagerAdapter extends FragmentStateAdapter {
 
-    ArrayList<EntityModel> _entities;
+    final ArrayList<EntityModel> _entities;
     public LeaseDetailsViewPagerAdapter(@NonNull Fragment fragment, ArrayList<EntityModel> entities)
     {
         super(fragment);

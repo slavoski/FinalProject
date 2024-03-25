@@ -23,5 +23,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="10dp"
         android:foreground="@drawable/add_24px"
+        android:contentDescription="@string/add_a_new_lease"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,19 +28,18 @@ import java.util.List;
 public class OilWellFragment extends Fragment {
 
 
-    OilWellModel _oilWellModel;
+    final OilWellModel _oilWellModel;
 
     private CardDetailsRecyclerViewAdapter _cardDetailsRecyclerViewAdapter;
     private final HashMap<String, CardModel> _cards = new HashMap<>();
     private final List<String> _cardKeyList = new ArrayList<>();
-    private FirebaseHelper _firebaseHelper;
     RecyclerView recyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _firebaseHelper = new FirebaseHelper();
+        FirebaseHelper _firebaseHelper = new FirebaseHelper();
 
         _firebaseHelper.fire_store.collection("Cards")
                 .where(Filter.and( Filter.equalTo("TypeId", "OIL_WELL"),

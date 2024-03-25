@@ -4,7 +4,7 @@ import com.example.oilWellChecklist.Constants.EntityType;
 
 public class OilWellModel extends EntityModel {
 
-    public boolean IsCapped;
+    public final boolean IsCapped;
 
 
     public OilWellModel(String id, String name, String description, String leaseId, String url, boolean isCapped) {

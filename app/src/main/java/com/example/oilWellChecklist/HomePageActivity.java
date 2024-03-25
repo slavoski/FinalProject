@@ -112,14 +112,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
             finish();
         }
-       //else if (id == R.id.movie_info_menu_option || id == R.id.movie_info_action)
-       //{
-       //    //LoadFragment(new RandomMovieDetailFragment());
-       //}
-       //else if(id == R.id.movie_details_menu_option || id == R.id.movie_details_action)
-       //{
-       //   // startActivity(new Intent(MainActivity.this, MovieDetailViewPager.class));
-       //}
+        else
+        {
+            return false;
+        }
 
         return true;
     }

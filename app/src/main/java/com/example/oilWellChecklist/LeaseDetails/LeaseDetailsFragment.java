@@ -101,15 +101,33 @@ public class LeaseDetailsFragment extends Fragment implements NewEntityDialog.Ne
         _leaseDetailsAdapter = new LeaseDetailsViewPagerAdapter(this, _entities);
 
         _viewPager = view.findViewById(R.id.lease_detail_pager);
-        _viewPager.setAdapter(_leaseDetailsAdapter);
-        _viewPager.setPageTransformer(new ZoomOutPageTransformer());
+        if(_viewPager != null) {
+            _viewPager.setAdapter(_leaseDetailsAdapter);
+            _viewPager.setPageTransformer(new ZoomOutPageTransformer());
+        }
+        else {
+            Toast.makeText(getContext(), "Error Finding Lease Pager", Toast.LENGTH_SHORT).show();
+        }
 
         TabLayout tabLayout = view.findViewById(R.id.lease_detail_tabs);
-        new TabLayoutMediator(tabLayout, _viewPager, (tab, position) ->
-                tab.setText(_entities.get(position).Name)).attach();
+        if(tabLayout != null) {
+            new TabLayoutMediator(tabLayout, _viewPager, (tab, position) ->
+                    tab.setText(_entities.get(position).Name)).attach();
+        }
+        else
+        {
+            Toast.makeText(getContext(), "Error Finding Lease Tab", Toast.LENGTH_SHORT).show();
+        }
 
         FloatingActionButton actionButton = view.findViewById(R.id.new_entity_button);
-        actionButton.setOnClickListener(this::openNewEntityDialog);
+
+        if(actionButton != null) {
+           actionButton.setOnClickListener(this::openNewEntityDialog);
+        }
+        else
+        {
+            Toast.makeText(getContext(), "Error Finding Lease New", Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }

@@ -8,12 +8,12 @@ import com.google.firebase.storage.FirebaseStorage;
 
 public class FirebaseHelper {
 
-    public FirebaseAuth mAuth;
-    public FirebaseUser currentUser;
-    public FirebaseDatabase database;
+    public final FirebaseAuth mAuth;
+    public final FirebaseUser currentUser;
+    public final FirebaseDatabase database;
 
-    public FirebaseFirestore fire_store;
-    public FirebaseStorage storage;
+    public final FirebaseFirestore fire_store;
+    public final FirebaseStorage storage;
     public FirebaseHelper()
     {
         mAuth = FirebaseAuth.getInstance();

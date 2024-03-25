@@ -23,15 +23,15 @@ import com.google.firebase.firestore.Filter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class TankFragment extends Fragment {
 
-    TankModel _tankModel;
+    final TankModel _tankModel;
 
     private CardDetailsRecyclerViewAdapter _cardDetailsRecyclerViewAdapter;
     private final HashMap<String, CardModel> _cards = new HashMap<>();
     private final List<String> _cardKeyList = new ArrayList<>();
-    private FirebaseHelper _firebaseHelper;
     RecyclerView recyclerView;
 
     public TankFragment(TankModel tankModel)
@@ -43,7 +43,7 @@ public class TankFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _firebaseHelper = new FirebaseHelper();
+        FirebaseHelper _firebaseHelper = new FirebaseHelper();
 
         _firebaseHelper.fire_store.collection("Cards")
                 .where(Filter.and( Filter.equalTo("TypeId", "TANK"),
@@ -56,7 +56,7 @@ public class TankFragment extends Fragment {
                     if(task.isSuccessful())
                     {
                         for(DocumentSnapshot document : task.getResult()) {
-                            CardModel cardModel = new CardModel( document.get("Id").toString(), document.get("Description").toString() );
+                            CardModel cardModel = new CardModel( Objects.requireNonNull(document.get("Id")).toString(), Objects.requireNonNull(document.get("Description")).toString() );
                             _cardKeyList.add(document.getId());
                             _cards.put(document.getId(), cardModel);
 
@@ -67,7 +67,7 @@ public class TankFragment extends Fragment {
                     }
                     else
                     {
-                        Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

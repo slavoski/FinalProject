@@ -24,8 +24,8 @@ public class CardDetailsRecyclerViewAdapter extends RecyclerView.Adapter<CardDet
 
     private final List<String> _cardKeyList;
     private final HashMap<String, CardModel> _cards;
-    FirebaseHelper _firebaseHelper;
-    Context _context;
+    final FirebaseHelper _firebaseHelper;
+    final Context _context;
 
     public CardDetailsRecyclerViewAdapter(Context context, HashMap<String, CardModel> cards, List<String> cardKeyList)
     {
@@ -69,8 +69,8 @@ public class CardDetailsRecyclerViewAdapter extends RecyclerView.Adapter<CardDet
 
     public static class CardDetailsViewHolder extends RecyclerView.ViewHolder {
 
-        public MaterialTextView _cardDescription;
-        public MaterialButtonToggleGroup _cardToggleButton;
+        public final MaterialTextView _cardDescription;
+        public final MaterialButtonToggleGroup _cardToggleButton;
         public ImageView _cardImage;
 
         public CardDetailsViewHolder(@NonNull View itemView) {

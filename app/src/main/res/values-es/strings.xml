@@ -55,4 +55,7 @@
     <string name="select_new_entity">Seleccionar nueva entidad:</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="lease_details">Detalles del contrato de arrendamiento</string>
+    <string name="add_a_new_lease">Agregar un nuevo contrato de arrendamiento</string>
+    <string name="loading_content">Cargando contenido</string>
 </resources>
